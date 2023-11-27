@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" style="zoom: 0.55">
+  <head>
+    <title>Invoice PDF template two</title>
+    <meta charset="utf-8" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      .border,
+      .border-bottom,
+      .border-top,
+      .border-right,
+      .border-left,
+      .table {
+        border-color: #212529 !important;
+      }
+
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #000;
+      }
+
+      td,
+      th {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #000;
+      }
+
+      .no-border td,
+      .no-border th {
+        border: none;
+      }
+
+      tr.layout,
+      .layout td,
+      .layout th {
+        padding: 0px;
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table class="no-border mb-3">
+      <tr class="layout">
+        <th width="8%"></th>
+        <th width="50%"></th>
+        <th width="10%" class="text-center"></th>
+        <th width="10%" class="text-center"></th>
+        <th width="10%" class="text-end"></th>
+        <th width="12%" class="text-end"></th>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <h3>{{company.name}}</h3>
+          <div style="font-size: 16px">
+            <div>{{company.address.address1}}</div>
+            <div>{{company.address.address2}}</div>
+            <div>
+              {{company.address.city}}, {{company.address.state}},
+              {{company.address.country}}
+            </div>
+            <div>{{company.address.postalCode}}</div>
+            <div class="mt-2">{{company.contactNumber}}</div>
+            <div>{{company.email}}</div>
+          </div>
+          <div class="mt-1">GST ID: {{company.gstNumber}}</div>
+        </td>
+        <td colspan="2">
+          {{#if company.logo}}
+          <img width="80%" src="{{company.logo}}" alt="{{company.name}}" />
+          {{else}}
+          <h1>{{company.name}}</h1>
+          {{/if}}
+        </td>
+      </tr>
+    </table>
+
+    <table class="mb-3" style="border-top: none">
+      <tr class="layout">
+        <th width="8%"></th>
+        <th width="50%"></th>
+        <th width="10%" class="text-center"></th>
+        <th width="10%" class="text-center"></th>
+        <th width="10%" class="text-end"></th>
+        <th width="12%" class="text-end"></th>
+      </tr>
+      <tr>
+        <td colspan="2" rowspan="2">
+          <h3>{{client.name}}</h3>
+          <div style="font-size: 16px">
+            <div>{{client.billAddress.address1}}</div>
+            <div>{{client.billAddress.address2}}</div>
+            <div>
+              {{client.billAddress.city}}, {{client.billAddress.state}},
+              {{client.billAddress.country}}
+            </div>
+            <div>{{client.billAddress.postalCode}}</div>
+            <div class="mt-2">{{client.contactPerson.contactNumber}}</div>
+            <div>{{client.contactPerson.email}}</div>
+          </div>
+          <div class="mt-1">GST ID: {{client.gstNumber}}</div>
+        </td>
+        <td colspan="2">
+          <h5>Invoice ID:</h5>
+          <div>{{invoiceId}}</div>
+        </td>
+        <td colspan="2">
+          <h5>Invoice Date:</h5>
+          <div>{{invoiceDate}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="vertical-align: top">
+          <h5>Delivery Note:</h5>
+          <div>{{deliveryNote}}</div>
+        </td>
+        <td colspan="2" style="vertical-align: top">
+          <h5>Payment Mode:</h5>
+          <div>{{paymentMode}}</div>
+        </td>
+      </tr>
+    </table>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th width="8%">Sr. No.</th>
+          <th width="50%">Particulars</th>
+          <th width="10%" class="text-center">Qty.</th>
+          <th width="10%" class="text-center">Unit</th>
+          <th width="10%" class="text-end">Rate</th>
+          <th width="12%" class="text-end">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+          <td>{{inc @index}}</td>
+          <td>{{this.taskName}}</td>
+          <td class="text-center">{{this.quantity.qty}}</td>
+          <td class="text-center">{{this.quantity.unit}}</td>
+          <td class="text-end">{{../currencySymbol}} {{this.price}}</td>
+          <td class="text-end">{{../currencySymbol}} {{this.total}}</td>
+        </tr>
+        {{/each}}
+        <tr>
+          <th class="text-end" colspan="5">SubTotal</th>
+          <th class="text-end">{{currencySymbol}} {{subtotal}}</th>
+        </tr>
+        {{#each taxes}}
+        <tr>
+          <th class="text-end" colspan="5">{{this.type}}({{this.rate}}%)</th>
+          <th class="text-end">{{../currencySymbol}} {{this.amount}}</th>
+        </tr>
+        {{/each}}
+        <tr>
+          <th class="text-end" colspan="5">Total</th>
+          <th class="text-end">{{currencySymbol}} {{total}}</th>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="mb-3" style="border: none">
+      <tr class="no-border">
+        <th colspan="5">
+          <h5>
+            <b>Amount in words:</b> {{amountInWords}} {{currencyPrefix}} {{#if
+            decimalExists}} and {{/if}} {{decimalAmountInWords}} {{#if
+            decimalExists}} {{currencyPostfix}} {{/if}} only
+          </h5>
+        </th>
+      </tr>
+    </table>
+
+    <table class="mb-3" style="border: none">
+      <tr class="no-border">
+        <th colspan="5">
+          <h5><b>Concluding text:</b> {{concludingText}}</h5>
+        </th>
+      </tr>
+    </table>
+
+    <!-- <div style="page-break-after: always"></div> -->
+
+    <table class="mb-3" style="border: none">
+      <tr style="border: none">
+        <td colspan="5">
+          <h3>Bank Details</h3>
+          <div><b>Receiver:</b> {{bank.accountHolder}}</div>
+          <div><b>BANK Name:</b> {{bank.name}}</div>
+          <div><b>Account number:</b> {{bank.accountNumber}}</div>
+          <div><b>SWIFT/BIC:</b>{{bank.swiftCode}}</div>
+          <div><b>IFSC:</b> {{bank.ifscCode}}</div>
+        </td>
+        <td
+          colspan="5"
+          style="border: none; text-align: right; vertical-align: bottom"
+        >
+          <div><b>{{company.name}}</b></div>
+          <div class="mt-5"><b>Signature</b></div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

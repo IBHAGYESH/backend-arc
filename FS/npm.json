@@ -1,0 +1,36 @@
+{
+	"scripts": {
+		"start": "node server.js",
+		"dev": "rimraf uploads && nodemon server.js"
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.295.0",
+		"@aws-sdk/lib-storage": "^3.299.0",
+		"@aws-sdk/s3-request-presigner": "^3.299.0",
+		"@azure/storage-blob": "^12.12.0",
+		"@ffmpeg-installer/ffmpeg": "^1.1.0",
+		"@ffprobe-installer/ffprobe": "^2.0.0",
+		"cookie-parser": "~1.4.4",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "~4.16.1",
+		"express-winston": "^4.2.0",
+		"fluent-ffmpeg": "^2.1.2",
+		"ioredis": "^5.3.1",
+		"jimp": "^0.22.8",
+		"method-override": "^3.0.0",
+		"mime": "^3.0.0",
+		"mime-types": "^2.1.35",
+		"multer": "*",
+		"node-jose": "^2.2.0",
+		"rate-limiter-flexible": "^2.4.1",
+		"rimraf": "^5.0.1",
+		"sharp": "^0.32.0",
+		"winston": "^3.8.2",
+		"winston-daily-rotate-file": "^4.7.1",
+		"workerpool": "^6.4.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20"
+	}
+}
